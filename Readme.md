@@ -74,10 +74,7 @@ Essa funcionalidade foi implementada através do controle de tempo de pressionam
 
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/seu-repositorio.git
-
-# Acesse a pasta
-cd seu-repositorio
+git clone https://github.com/vitordrs/pokedex
 
 # Abra o arquivo
 index.html
