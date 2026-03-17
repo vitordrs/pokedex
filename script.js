@@ -10,6 +10,8 @@ const btnNext = document.querySelector('.btn-next');
 const btnInicio = document.querySelector('.random');
 let searchPokemon = 1;
 let holdTimeOut;
+let pressTimer;
+let isHolding = false;
 
 const typeColorMap = {
     'bug' : '#98FB98',
@@ -95,10 +97,44 @@ btnNext.addEventListener('click', ()=> {
     renderPokemon(searchPokemon);
 });
 
-btnInicio.addEventListener('click', () => {
+btnInicio.addEventListener('click', (e) => {
+    if (isHolding) {
+        e.preventDefault();
+        return;
+    }
+
     searchPokemon = Math.floor(Math.random() * 1000) + 1;
-    renderPokemon(searchPokemon)
+    renderPokemon(searchPokemon);
 });
 
+btnInicio.addEventListener('mouseup', () => {
+    clearTimeout(pressTimer);
+    setTimeout(() => {
+        isHolding = false;
+    }, 0);
+});
+
+btnInicio.addEventListener('mousedown', () => {
+    isHolding = false;
+
+    pressTimer = setTimeout(() => {
+        searchPokemon = 1;
+        renderPokemon(searchPokemon);
+        isHolding = true;
+    }, 500);
+});
+
+btnInicio.addEventListener('mouseup', () => {
+    clearTimeout(pressTimer);
+
+    if (!isHolding) {
+        // CLIQUE RÁPIDO = RANDOM
+        searchPokemon = Math.floor(Math.random() * 1000) + 1;
+        renderPokemon(searchPokemon);
+    }
+});
+btnInicio.addEventListener('mouseleave', () => {
+    clearTimeout(pressTimer);
+});
 
 renderPokemon(searchPokemon)
